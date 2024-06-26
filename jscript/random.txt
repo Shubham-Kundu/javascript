@@ -168,3 +168,22 @@ News and Weather Alerts:
 Providing urgent updates about news or weather conditions.
 Conclusion
 Enabling applications to pop up from the background can enhance user engagement and provide timely information. By following best practices and respecting user preferences, developers can implement this feature effectively while maintaining a positive user experience.
+
+
+public class WidgetProvider extends AppWidgetProvider {
+
+    @Override
+    public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
+        for (int appWidgetId : appWidgetIds) {
+            RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.widget_layout);
+
+            // Create an Intent to launch an activity when the button is clicked
+            Intent intent = new Intent(context, MainActivity.class);
+            PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
+            views.setOnClickPendingIntent(R.id.widget_button, pendingIntent);
+
+            // Update the widget
+            appWidgetManager.updateAppWidget(appWidgetId, views);
+        }
+    }
+}
